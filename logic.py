@@ -1,5 +1,4 @@
-import requests, os
-from google import genai
+import os
 
 def get_weather(city="Busan"):
     try:
