@@ -1,28 +1,29 @@
+import requests
 import os
+from google import genai
 
 def get_weather(city="Busan"):
     try:
         api_key = os.environ.get("WEATHER_API_KEY")
+
+        if not api_key:
+            return 23, "❌ API키 없음"
+
         url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=kr"
         response = requests.get(url)
         data = response.json()
+
+        if data.get("cod") != 200:
+            return 23, f"❌ API오류: {data.get('message', '알수없음')}"
+
         temp = round(data["main"]["temp"])
         condition = data["weather"][0]["description"]
-        
-        print(f"[날씨 원본값]: '{condition}'")
-        
-        condition_map = {
-            "온흐림": "흐림",
-            "튼구름": "구름 많음",
-            "약한 비": "비",
-            "적은 구름": "구름 조금",
-            "맑음": "맑음",
-            "실 비": "이슬비",
-        }
-        condition = condition_map.get(condition, condition)
+        condition = condition.replace("온흐림", "흐림").replace("튼구름", "구름 많음").replace("약한 비", "비")
         return temp, condition
+
     except Exception as e:
-        return 23, "맑음"
+        return 23, f"❌ 예외: {e}"
+
 
 def get_outfit_recommendation(temp, condition, schedule, style):
     try:
