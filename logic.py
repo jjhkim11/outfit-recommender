@@ -7,7 +7,7 @@ def get_weather(city="Busan"):
         api_key = os.environ.get("WEATHER_API_KEY")
 
         if not api_key:
-            return 23, "❌ API키 없음"
+            return 23, "맑음"
 
         url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric&lang=kr"
         response = requests.get(url)
@@ -18,7 +18,7 @@ def get_weather(city="Busan"):
 
         temp = round(data["main"]["temp"])
         condition = data["weather"][0]["description"]
-        condition = condition.replace("온흐림", "흐림").replace("튼구름", "구름 많음").replace("약한 비", "비")
+        condition = condition.replace("온흐림", "흐림").replace("튼구름", "구름 많음").replace("약한 비", "비").replace("실 비", "이슬비")
         return temp, condition
 
     except Exception as e:
