@@ -91,10 +91,10 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 st.markdown("**오늘 일정은 무엇인가요?**")
 schedule = st.radio(
-    "", 
+    "일정 선택",  
     ["🎓 수업", "🧑‍🤝‍🧑 친구 약속", "🏠 집콕", "💑 데이트"],
     horizontal=True,
-    label_visibility="collapsed"
+    label_visibility="collapsed"  
 )
 
 st.markdown("<hr>", unsafe_allow_html=True)
